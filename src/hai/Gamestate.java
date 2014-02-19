@@ -11,9 +11,6 @@ public class Gamestate {
 	
 	static int choice;
 	
-	//private variables
-	
-	
 	//methods
 	public static void wait(int X) {
 		int time = X * 1000;
@@ -22,8 +19,7 @@ public class Gamestate {
 		} catch(InterruptedException ex) {}
 	}
 	
-	private static void consoleClear()
-	{
+	private static void consoleClear() {
 	for (int i = 0; i < 50; ++i) System.out.println();
 	
 		/*try {
@@ -96,16 +92,17 @@ public class Gamestate {
 		System.out.println("\nPRESS ENTER TO CONTINUE");
 		String enter = input.nextLine();
 		
+		//allows to skip intro story
 		if (!enter.equals("admin")) {
 			story(1);
+		} else {
+			consoleClear();
 		}
-		
-		consoleClear();
 		
 		System.out.println("What is your name player?");
 		String name = input.nextLine();
 		
-		Player main = new Player(name);
+		Player mainCharacter = new Player(name);
 		
 		Homebase base = new Homebase();
 		currentState(base);
@@ -115,17 +112,14 @@ public class Gamestate {
 	public static void story(int position) {
 		switch (position) {
 		case 1: //begin story
+			consoleClear();
+			
 			System.out.print("May 8th, 2132, 353 kilometers above the surface of Earth"
 					+ "\n8 hours after a system-crippling disaster, the space station Andromeda drifts through earth's uppermost atmosphere.");
 			wait(6);
 			System.out.print("\n\nAbandoned.");wait(1);System.out.print(".");wait(1);System.out.print(".");wait(1);System.out.print(".");wait(1);System.out.print("\nalmost.");
 			
 			wait(3);
-			
-			System.out.println("What is your name player?");
-			String name = input.nextLine();
-			
-			Player main = new Player(name);
 			break;
 		case 2: 
 			break;
@@ -137,10 +131,18 @@ public class Gamestate {
 	}
 	
 	public static void currentState(Dungeon room) {
+		
+		//sets room descriptors and such
 		room.setRoomFunction();
 		room.setRoomLocation();
+		room.setRoomSize();
+		room.setRoomShape();
+		
+		//prints out info for user
 		System.out.println(room.getRoomDescription());
 		System.out.println(room.getActions());
+		
+		//user input
 		String enter = input.nextLine();
 		String user = enter.toUpperCase();
 		
